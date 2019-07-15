@@ -22,36 +22,13 @@ public final class R {
     public static final int yw=0x7f030002;
   }
   public static final class id {
-    public static final int buttonCancel=0x7f040000;
-    public static final int buttonCapture=0x7f040001;
-    public static final int buttonCreate=0x7f040002;
-    public static final int buttonIdentify=0x7f040003;
-    public static final int buttonOK=0x7f040004;
-    public static final int buttonSelectCancel=0x7f040005;
-    public static final int buttonSelectOK=0x7f040006;
-    public static final int buttonStop=0x7f040007;
-    public static final int buttonVerify=0x7f040008;
-    public static final int checkBoxSaveTmplAnsi=0x7f040009;
-    public static final int checkBoxSaveTmplISO=0x7f04000a;
-    public static final int checkBoxUsbHost=0x7f04000b;
-    public static final int editDBFolder=0x7f04000c;
-    public static final int editTmplName=0x7f04000d;
-    public static final int imageViewFinger=0x7f04000e;
-    public static final int listTmpls=0x7f04000f;
-    public static final int spinnerFinger=0x7f040010;
-    public static final int spinnerMatchScore=0x7f040011;
-    public static final int textError=0x7f040012;
-    public static final int textView1=0x7f040013;
-    public static final int textViewCaption=0x7f040014;
-    public static final int textViewFinger=0x7f040015;
-    public static final int textViewMatchScore=0x7f040016;
-    public static final int textViewSaveOptions=0x7f040017;
-    public static final int txtMessage=0x7f040018;
+    public static final int buttonCapture=0x7f040000;
+    public static final int buttonStop=0x7f040001;
+    public static final int checkBoxUsbHost=0x7f040002;
+    public static final int imageViewFinger=0x7f040003;
   }
   public static final class layout {
     public static final int activity_main=0x7f050000;
-    public static final int asktmplname=0x7f050001;
-    public static final int selecttmpl=0x7f050002;
   }
   public static final class string {
     public static final int app_name=0x7f060000;

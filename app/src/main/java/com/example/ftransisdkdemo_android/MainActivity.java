@@ -1,9 +1,7 @@
 package com.example.ftransisdkdemo_android;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
@@ -12,27 +10,19 @@ import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.futronictech.AnsiSDKLib;
 import com.futronictech.UsbDeviceDataExchangeImpl;
 import com.telpo.tps550.api.fingerprint.FingerPrint;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.util.Locale;
 
 public class MainActivity extends Activity {
 
@@ -40,39 +30,15 @@ public class MainActivity extends Activity {
   public static final int MESSAGE_SHOW_IMAGE = 2;
   public static final int MESSAGE_SHOW_ERROR_MSG = 3;
   public static final int MESSAGE_END_OPERATION = 4;
-
-  //Pending operations
   private static final int OPERATION_CAPTURE = 1;
-  private static final int OPERATION_CREATE = 2;
-  private static final int OPERATION_VERIFY = 3;
-  private static final int OPERATION_IDENTIFY = 4;
-
-  // Intent request codes
-  private static final int REQUEST_INPUT_TMPL_NAME = 1;
-  private static final int REQUEST_SELECT_TMPL_NAME = 2;
-
-  private static final String kAnsiTemplatePostfix = "(ANSI)";
-  private static final String kIsoTemplatePostfix = "(ISO)";
 
   private Button mButtonCapture;
-  private Button mButtonCreate;
-  private Button mButtonVerify;
-  private Button mButtonIdentify;
 
   private Button mButtonStop;
-  private Button mButtonCreate2;
 
   private ImageView mFingerImage;
   private static Bitmap mBitmapFP = null;
 
-  private TextView mTxtMessage;
-  private TextView mErrMessage;
-
-  private CheckBox mSaveIso;
-  private CheckBox mSaveAnsi;
-
-  private Spinner mFinger;
-  private Spinner mMatchScore;
 
   private CheckBox mUsbHostMode;
 
@@ -80,196 +46,75 @@ public class MainActivity extends Activity {
 
   private OperationThread mOperationThread = null;
 
-  private float[] mMatchScoreValue = new float[6];
-
-  private String mNewTmplName = null;
-
-  /**
-   * A database directory name.
-   */
-  public static String mDbDir;
 
   private UsbDeviceDataExchangeImpl usb_host_ctx = null;
-  private byte[] img_buffer;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    new OpenTask().execute();//350
-
-    mMatchScoreValue[0] = AnsiSDKLib.FTR_ANSISDK_MATCH_SCORE_LOW;
-    mMatchScoreValue[1] = AnsiSDKLib.FTR_ANSISDK_MATCH_SCORE_LOW_MEDIUM;
-    mMatchScoreValue[2] = AnsiSDKLib.FTR_ANSISDK_MATCH_SCORE_MEDIUM;
-    mMatchScoreValue[3] = AnsiSDKLib.FTR_ANSISDK_MATCH_SCORE_HIGH_MEDIUM;
-    mMatchScoreValue[4] = AnsiSDKLib.FTR_ANSISDK_MATCH_SCORE_HIGH;
-    mMatchScoreValue[5] = AnsiSDKLib.FTR_ANSISDK_MATCH_SCORE_VERY_HIGH;
-
-    mTxtMessage = findViewById(R.id.txtMessage);
-    mErrMessage = findViewById(R.id.textError);
+    new OpenTask().execute();
 
     mFingerImage = findViewById(R.id.imageViewFinger);
     mButtonCapture = findViewById(R.id.buttonCapture);
-    mButtonCreate = findViewById(R.id.buttonCreate);
-    mButtonVerify = findViewById(R.id.buttonVerify);
-    mButtonIdentify = findViewById(R.id.buttonIdentify);
-
     mButtonStop = findViewById(R.id.buttonStop);
-
-    mSaveAnsi = findViewById(R.id.checkBoxSaveTmplAnsi);
-    mSaveIso = findViewById(R.id.checkBoxSaveTmplISO);
 
     mUsbHostMode = findViewById(R.id.checkBoxUsbHost);
 
-    mFinger = findViewById(R.id.spinnerFinger);
     ArrayAdapter<CharSequence> adapter1 = ArrayAdapter
         .createFromResource(this, R.array.FingerNameArray, android.R.layout.simple_spinner_item);
     adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    mFinger.setAdapter(adapter1);
-    mFinger.setSelection(0);
 
-    mMatchScore = findViewById(R.id.spinnerMatchScore);
     ArrayAdapter<CharSequence> adapter2 = ArrayAdapter
         .createFromResource(this, R.array.MatchScoreArray, android.R.layout.simple_spinner_item);
     adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    mMatchScore.setAdapter(adapter2);
-    mMatchScore.setSelection(2);
 
     mUsbHostMode.setChecked(true);
-    mSaveAnsi.setChecked(true);
     mButtonStop.setEnabled(false);
-
-    // Get database folder
-    try {
-      mDbDir = GetDatabaseDir();
-    } catch (AppException e) {
-      Toast.makeText(getApplicationContext(),
-          "Initialization failed. Application will be close.\nError description: " + e.getMessage(),
-          Toast.LENGTH_SHORT).show();
-      System.exit(0);
-    }
 
     usb_host_ctx = new UsbDeviceDataExchangeImpl(this, mHandler);
 
-    mButtonCapture.setOnClickListener(new OnClickListener() {
-      public void onClick(View v) {
-        //new OpenTask().execute();//350
-        if (mUsbHostMode.isChecked()) {
-          if (usb_host_ctx.OpenDevice(0, true)) {
-            StartCapture();
-          } else {
-            if (usb_host_ctx.IsPendingOpen()) {
-              mPendingOperation = OPERATION_CAPTURE;
-            } else {
-              mErrMessage.setText("Can not start capture operation.\nCan't open scanner device");
-            }
-          }
-        } else {
+    mButtonCapture.setOnClickListener(v -> {
+      if (mUsbHostMode.isChecked()) {
+        if (usb_host_ctx.OpenDevice(0, true)) {
           StartCapture();
-        }
-      }
-    });
-
-    mButtonCreate.setOnClickListener(new OnClickListener() {
-      public void onClick(View v) {
-        if (mUsbHostMode.isChecked()) {
-          if (usb_host_ctx.OpenDevice(0, true)) {
-            StartCreate();
-          } else {
-            if (usb_host_ctx.IsPendingOpen()) {
-              mPendingOperation = OPERATION_CREATE;
-            } else {
-              mErrMessage
-                  .setText("Can not start create template operation.\nCan't open scanner device");
-            }
-          }
         } else {
-          StartCreate();
-        }
-      }
-    });
-
-    mButtonVerify.setOnClickListener(new OnClickListener() {
-      public void onClick(View v) {
-        if (mUsbHostMode.isChecked()) {
-          if (usb_host_ctx.OpenDevice(0, true)) {
-            StartVerify();
+          if (usb_host_ctx.IsPendingOpen()) {
+            mPendingOperation = OPERATION_CAPTURE;
           } else {
-            //todo ...
-            if (usb_host_ctx.IsPendingOpen()) {
-              mPendingOperation = OPERATION_VERIFY;
-            } else {
-              mErrMessage
-                  .setText("Can not start verify template operation.\nCan't open scanner device");
-            }
+            Toast.makeText(MainActivity.this,
+                "Can not start capture operation.\nCan't open scanner device", Toast.LENGTH_SHORT)
+                .show();
           }
-        } else {
-          StartVerify();
         }
+      } else {
+        StartCapture();
       }
     });
 
-    mButtonIdentify.setOnClickListener(new OnClickListener() {
-      public void onClick(View v) {
-        if (mUsbHostMode.isChecked()) {
-          if (usb_host_ctx.OpenDevice(0, true)) {
-            StartIdentify();
-          } else {
-            if (usb_host_ctx.IsPendingOpen()) {
-              mPendingOperation = OPERATION_IDENTIFY;
-            } else {
-              mErrMessage.setText("Can not start identify operation.\nCan't open scanner device");
-            }
-          }
-        } else {
-          StartIdentify();
-        }
-      }
-    });
-
-    mButtonStop.setOnClickListener(new OnClickListener() {
-      public void onClick(View v) {
-        if (mOperationThread != null) {
-          mOperationThread.Cancel();
-        }
+    mButtonStop.setOnClickListener(v -> {
+      if (mOperationThread != null) {
+        mOperationThread.Cancel();
       }
     });
 
   }
 
 
-  private void SaveTemplate(String name, byte[] template, int size) {
-    FileOutputStream fs = null;
-    File f = null;
-
-    try {
-      f = new File(name);
-      fs = new FileOutputStream(f);
-
-      byte[] writeTemplate = new byte[size];
-      System.arraycopy(template, 0, writeTemplate, 0, size);
-      fs.write(writeTemplate);
-      fs.close();
-    } catch (Exception e) {
-      String error = String
-          .format("Failed to save template to file %s. Error: %s.", name, e.toString());
-      mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, error).sendToTarget();
-    }
-  }
-
+  @SuppressLint("HandlerLeak")
   private final Handler mHandler = new Handler() {
     @Override
     public void handleMessage(Message msg) {
       switch (msg.what) {
         case MESSAGE_SHOW_MSG:
           String showMsg = (String) msg.obj;
-          mTxtMessage.setText(showMsg);
+          Toast.makeText(MainActivity.this, showMsg, Toast.LENGTH_SHORT).show();
           break;
 
         case MESSAGE_SHOW_ERROR_MSG:
           String showErr = (String) msg.obj;
-          mErrMessage.setText(showErr);
-          mTxtMessage.setText("");
+          Toast.makeText(MainActivity.this, showErr, Toast.LENGTH_SHORT).show();
+
           break;
 
         case MESSAGE_SHOW_IMAGE:
@@ -281,59 +126,25 @@ public class MainActivity extends Activity {
 
         case UsbDeviceDataExchangeImpl.MESSAGE_ALLOW_DEVICE: {
           if (usb_host_ctx.ValidateContext()) {
-            switch (mPendingOperation) {
-              case OPERATION_CAPTURE:
-                StartCapture();
-                break;
-
-              case OPERATION_CREATE:
-                StartCreate();
-                break;
-
-              case OPERATION_VERIFY:
-                StartVerify();
-                break;
-
-              case OPERATION_IDENTIFY:
-                StartIdentify();
-                break;
+            if (mPendingOperation == OPERATION_CAPTURE) {
+              StartCapture();
             }
           } else {
-            mErrMessage.setText("Can't open scanner device");
+            Toast.makeText(MainActivity.this, "Can't open scanner device", Toast.LENGTH_SHORT)
+                .show();
           }
 
           break;
         }
 
         case UsbDeviceDataExchangeImpl.MESSAGE_DENY_DEVICE: {
-          mErrMessage.setText("User deny scanner device");
+          Toast.makeText(MainActivity.this, "User deny scanner device", Toast.LENGTH_SHORT).show();
           break;
         }
 
       }
     }
   };
-
-  static private String GetDatabaseDir() throws AppException {
-    String szDbDir;
-    File extStorageDirectory = Environment.getExternalStorageDirectory();
-    File Dir = new File(extStorageDirectory, "Android//FtrAnsiSdkDb");
-    if (Dir.exists()) {
-      if (!Dir.isDirectory()) {
-        throw new AppException("Can not create database directory " + Dir.getAbsolutePath() +
-            ". File with the same name already exist.");
-      }
-    } else {
-      try {
-        Dir.mkdirs();
-      } catch (SecurityException e) {
-        throw new AppException("Can not create database directory " + Dir.getAbsolutePath() +
-            ". Access denied.");
-      }
-    }
-    szDbDir = Dir.getAbsolutePath();
-    return szDbDir;
-  }
 
   private Bitmap CreateFingerBitmap(int imgWidth, int imgHeight, byte[] imgBytes) {
     int[] pixels = new int[imgWidth * imgHeight];
@@ -365,89 +176,19 @@ public class MainActivity extends Activity {
     mOperationThread.start();
   }
 
-  private void StartCreateTmplate(String tmplName) {
-    if (!mSaveAnsi.isChecked() && !mSaveIso.isChecked()) {
-      mErrMessage.setText("Select any save template options");
-      return;
-    }
-
-    PrepareOperation();
-    mOperationThread = new CreateThread(
-        mUsbHostMode.isChecked(),
-        mFinger.getSelectedItemPosition(),
-        mSaveAnsi.isChecked(),
-        mSaveIso.isChecked(),
-        tmplName);
-    mOperationThread.start();
-  }
-
-  private void StartVerify() {
-    Intent selectuserIntent = new Intent(this, SelectTemplateName.class);
-    startActivityForResult(selectuserIntent, REQUEST_SELECT_TMPL_NAME);
-  }
-
-  private void StartCreate() {
-    Intent usernameIntent = new Intent(this, AskTemplateName.class);
-    startActivityForResult(usernameIntent, REQUEST_INPUT_TMPL_NAME);
-  }
-
-  private void StartVerifyTemplate(String tmplName) {
-    byte[] templateContent = null;
-    FileInputStream fs = null;
-    File f = null;
-
-    try {
-      f = new File(tmplName);
-      if (!f.exists() || !f.canRead()) {
-        throw new FileNotFoundException();
-      }
-
-      long nFileSize = f.length();
-      fs = new FileInputStream(f);
-
-      byte[] fileContent = new byte[(int) nFileSize];
-      fs.read(fileContent);
-      fs.close();
-
-      templateContent = fileContent;
-    } catch (Exception e) {
-      String error = String
-          .format("Failed to load template from file %s. Error: %s.", tmplName, e.toString());
-      mErrMessage.setText(error);
-    }
-
-    if (templateContent != null) {
-      PrepareOperation();
-      mOperationThread = new VerifyThread(mUsbHostMode.isChecked(),
-          mFinger.getSelectedItemPosition(), templateContent,
-          mMatchScoreValue[mMatchScore.getSelectedItemPosition()]);
-      mOperationThread.start();
-    }
-  }
-
-  void StartIdentify() {
-    PrepareOperation();
-    mOperationThread = new IdentifyThread(
-        mUsbHostMode.isChecked(),
-        mFinger.getSelectedItemPosition(),
-        mMatchScoreValue[mMatchScore.getSelectedItemPosition()],
-        mDbDir);
-    mOperationThread.start();
-  }
-
   private class OperationThread extends Thread {
 
     private boolean mCanceled = false;
 
-    public OperationThread() {
+    OperationThread() {
 
     }
 
-    public boolean IsCanceled() {
+    boolean IsCanceled() {
       return mCanceled;
     }
 
-    public void Cancel() {
+    void Cancel() {
       mCanceled = true;
 
       try {
@@ -461,31 +202,12 @@ public class MainActivity extends Activity {
 
   private class CaptureThread extends OperationThread {
 
-    private AnsiSDKLib ansi_lib = null;
-    private boolean mUseUsbHost = true;
+    private AnsiSDKLib ansi_lib;
+    private boolean mUseUsbHost;
 
-    public CaptureThread(boolean useUsbHost) {
+    CaptureThread(boolean useUsbHost) {
       ansi_lib = new AnsiSDKLib();
       mUseUsbHost = useUsbHost;
-    }
-
-    private void SaveTemplate(String name, byte[] template, int size) {
-      FileOutputStream fs = null;
-      File f = null;
-
-      try {
-        f = new File(name);
-        fs = new FileOutputStream(f);
-
-        byte[] writeTemplate = new byte[size];
-        System.arraycopy(template, 0, writeTemplate, 0, size);
-        fs.write(writeTemplate);
-        fs.close();
-      } catch (Exception e) {
-        String error = String
-            .format("Failed to save template to file %s. Error: %s.", name, e.toString());
-        mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, error).sendToTarget();
-      }
     }
 
     public void run() {
@@ -517,18 +239,13 @@ public class MainActivity extends Activity {
           return;
         }
 
-        img_buffer = new byte[ansi_lib.GetImageSize()];
+        byte[] img_buffer = new byte[ansi_lib.GetImageSize()];
 
-        for (; ; ) {
-          if (IsCanceled()) {
-            break;
-          }
-
+        for (; !IsCanceled(); ) {
           long lT1 = SystemClock.uptimeMillis();
           if (ansi_lib.CaptureImage(img_buffer)) {
             long op_time = SystemClock.uptimeMillis() - lT1;
-
-            String op_info = String.format("Capture done. Time is %d(ms)", op_time);
+            String op_info = String.format(Locale.US, "Capture done. Time is %d(ms)", op_time);
             mHandler.obtainMessage(MESSAGE_SHOW_MSG, -1, -1, op_info).sendToTarget();
 
             mBitmapFP = CreateFingerBitmap(
@@ -546,7 +263,6 @@ public class MainActivity extends Activity {
                 lastError == AnsiSDKLib.FTR_ERROR_NO_FRAME ||
                 lastError == AnsiSDKLib.FTR_ERROR_MOVABLE_FINGER) {
               Thread.sleep(100);
-              continue;
             } else {
               String error = String
                   .format("Capture failed. Error: %s.", ansi_lib.GetErrorMessage());
@@ -567,429 +283,14 @@ public class MainActivity extends Activity {
     }
   }
 
-  private class CreateThread extends OperationThread {
-
-    private AnsiSDKLib ansi_lib = null;
-    private boolean mUseUsbHost = true;
-    private int mFinger = 0;
-    private boolean mSaveAnsi = true;
-    private boolean mSaveIso = false;
-    private String mTmplName = "";
-
-    public CreateThread(boolean useUsbHost, int finger, boolean saveAnsi, boolean saveIso,
-        String tmplName) {
-      ansi_lib = new AnsiSDKLib();
-      mUseUsbHost = useUsbHost;
-
-      mFinger = finger;
-      mSaveAnsi = saveAnsi;
-      mSaveIso = saveIso;
-      mTmplName = tmplName;
-    }
-
-    public void run() {
-      boolean dev_open = false;
-
-      try {
-        if (mUseUsbHost) {
-          if (!ansi_lib.OpenDeviceCtx(usb_host_ctx)) {
-            mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, ansi_lib.GetErrorMessage())
-                .sendToTarget();
-            mHandler.obtainMessage(MESSAGE_END_OPERATION).sendToTarget();
-            return;
-          }
-        } else {
-          if (!ansi_lib.OpenDevice(0)) {
-            mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, ansi_lib.GetErrorMessage())
-                .sendToTarget();
-            mHandler.obtainMessage(MESSAGE_END_OPERATION).sendToTarget();
-            return;
-          }
-        }
-
-        dev_open = true;
-
-        if (!ansi_lib.FillImageSize()) {
-          mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, ansi_lib.GetErrorMessage())
-              .sendToTarget();
-          mHandler.obtainMessage(MESSAGE_END_OPERATION).sendToTarget();
-          return;
-        }
-
-        byte[] img_buffer = new byte[ansi_lib.GetImageSize()];
-
-        for (; ; ) {
-          if (IsCanceled()) {
-            break;
-          }
-
-          int tmplSize = ansi_lib.GetMaxTemplateSize();
-          byte[] template = new byte[tmplSize];
-          byte[] templateIso = new byte[tmplSize];
-          int[] realSize = new int[1];
-          int[] realIsoSize = new int[1];
-
-          long lT1 = SystemClock.uptimeMillis();
-          if (ansi_lib.CreateTemplate(mFinger, img_buffer, template, realSize)) {
-            long op_time = SystemClock.uptimeMillis() - lT1;
-
-            String op_info = String.format("Create done. Time is %d(ms)", op_time);
-            mHandler.obtainMessage(MESSAGE_SHOW_MSG, -1, -1, op_info).sendToTarget();
-
-            mBitmapFP = CreateFingerBitmap(
-                ansi_lib.GetImageWidth(),
-                ansi_lib.GetImageHeight(),
-                img_buffer);
-            mHandler.obtainMessage(MESSAGE_SHOW_IMAGE).sendToTarget();
-
-            if (mSaveAnsi) {
-              SaveTemplate(mTmplName + kAnsiTemplatePostfix, template, realSize[0]);
-            }
-
-            if (mSaveIso) {
-              realIsoSize[0] = tmplSize;
-              if (ansi_lib.ConvertAnsiTemplateToIso(template, templateIso, realIsoSize)) {
-                SaveTemplate(mTmplName + kIsoTemplatePostfix, templateIso, realIsoSize[0]);
-              } else {
-                String error = String
-                    .format("Conver to failed. Error: %s.", ansi_lib.GetErrorMessage());
-                mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, error).sendToTarget();
-              }
-            }
-
-            break;
-          } else {
-            int lastError = ansi_lib.GetErrorCode();
-
-            if (lastError == AnsiSDKLib.FTR_ERROR_EMPTY_FRAME ||
-                lastError == AnsiSDKLib.FTR_ERROR_NO_FRAME ||
-                lastError == AnsiSDKLib.FTR_ERROR_MOVABLE_FINGER) {
-              Thread.sleep(100);
-              continue;
-            } else {
-              String error = String.format("Create failed. Error: %s.", ansi_lib.GetErrorMessage());
-              mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, error).sendToTarget();
-              break;
-            }
-          }
-        }
-      } catch (Exception e) {
-        mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, e.getMessage()).sendToTarget();
-      }
-
-      if (dev_open) {
-        ansi_lib.CloseDevice();
-      }
-
-      mHandler.obtainMessage(MESSAGE_END_OPERATION).sendToTarget();
-    }
-
-    private void SaveTemplate(String name, byte[] template, int size) {
-      FileOutputStream fs = null;
-      File f = null;
-
-      try {
-        f = new File(name);
-        fs = new FileOutputStream(f);
-
-        byte[] writeTemplate = new byte[size];
-        System.arraycopy(template, 0, writeTemplate, 0, size);
-        fs.write(writeTemplate);
-        fs.close();
-      } catch (Exception e) {
-        String error = String
-            .format("Failed to save template to file %s. Error: %s.", name, e.toString());
-        mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, error).sendToTarget();
-      }
-    }
-  }
-
-  private class VerifyThread extends OperationThread {
-
-    private AnsiSDKLib ansi_lib = null;
-    private boolean mUseUsbHost = true;
-    private int mFinger = 0;
-    private byte[] mTmpl = null;
-    private float mMatchScore = 0;
-
-    public VerifyThread(boolean useUsbHost, int finger, byte[] template, float matchScore) {
-      ansi_lib = new AnsiSDKLib();
-      mUseUsbHost = useUsbHost;
-      mFinger = finger;
-      mTmpl = template;
-      mMatchScore = matchScore;
-
-
-    }
-
-    public void run() {
-      boolean dev_open = false;
-
-      try {
-        if (mUseUsbHost) {
-          if (!ansi_lib.OpenDeviceCtx(usb_host_ctx)) {
-            mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, ansi_lib.GetErrorMessage())
-                .sendToTarget();
-            mHandler.obtainMessage(MESSAGE_END_OPERATION).sendToTarget();
-            return;
-          }
-        } else {
-          if (!ansi_lib.OpenDevice(0)) {
-            mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, ansi_lib.GetErrorMessage())
-                .sendToTarget();
-            mHandler.obtainMessage(MESSAGE_END_OPERATION).sendToTarget();
-            return;
-          }
-        }
-
-        dev_open = true;
-
-        if (!ansi_lib.FillImageSize()) {
-          mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, ansi_lib.GetErrorMessage())
-              .sendToTarget();
-          mHandler.obtainMessage(MESSAGE_END_OPERATION).sendToTarget();
-          return;
-        }
-
-        byte[] img_buffer = new byte[ansi_lib.GetImageSize()];
-
-        for (; ; ) {
-          if (IsCanceled()) {
-            break;
-          }
-
-          float[] matchResult = new float[1];
-          long lT1 = SystemClock.uptimeMillis();
-                   /* String bas4= "Rk1SACAyMAAAAAGeAAABXAH4AMUAxQEAAgBMQICxADkGGUDHAFmASIDiAFb2S4DSAHl9RoC3AHsK\n" +
-                            "GUCrAHmNGYCLAIYdPoCGAJkdMoCMAK6jOkCmALedQYCaANWwTIDEAMcTPkCnAPHAUUCQAPm6UYC4\n" +
-                            "AQHKNYC1ARnWMkDHARJdKIDEASVqMIDiARutM4DfAQC6L4DqAPnALUEAAQ7GK4EKASHKOoEYARTQ\n" +
-                            "PoErAR5WOoEAATK6NoEHAUS6KIDwAU0jL0D5AVgaKIDpAWH////////////n+8AHg//+Hx//////\n" +
-                            "///////////n8x/zB//w/8/////////////////j9H/4b/+H/+f////////////////j4f/4z/4/\n" +
-                            "//P////////////////z4//wn/D///n////////////////zx//Gv8P///z////////////////z\n" +
-                            "z/+ePh////Z////////////////5n/8+eP///8cf///////////////5P/5+eP///g/P////////\n" +
-                            "///////9f/z88Pf/+A==";
-                    final byte bayu_template[] = Base64.decode(bas4,Base64.DEFAULT);*/
-          if (ansi_lib.VerifyTemplate(mFinger, mTmpl, img_buffer, matchResult)) {
-            long op_time = SystemClock.uptimeMillis() - lT1;
-
-            String op_info = String.format("Verify done. Result: %s(%f). Time is %d(ms)",
-                matchResult[0] > mMatchScore ? "OK" : "FAILED", matchResult[0], op_time);
-            mHandler.obtainMessage(MESSAGE_SHOW_MSG, -1, -1, op_info).sendToTarget();
-
-            mBitmapFP = CreateFingerBitmap(
-                ansi_lib.GetImageWidth(),
-                ansi_lib.GetImageHeight(),
-                img_buffer);
-            mHandler.obtainMessage(MESSAGE_SHOW_IMAGE).sendToTarget();
-            break;
-          } else {
-            int lastError = ansi_lib.GetErrorCode();
-
-            if (lastError == AnsiSDKLib.FTR_ERROR_EMPTY_FRAME ||
-                lastError == AnsiSDKLib.FTR_ERROR_NO_FRAME ||
-                lastError == AnsiSDKLib.FTR_ERROR_MOVABLE_FINGER) {
-              Thread.sleep(100);
-              continue;
-            } else {
-              String error = String.format("Verify failed. Error: %s.", ansi_lib.GetErrorMessage());
-              mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, error).sendToTarget();
-              break;
-            }
-          }
-        }
-      } catch (Exception e) {
-        mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, e.getMessage()).sendToTarget();
-      }
-
-      if (dev_open) {
-        ansi_lib.CloseDevice();
-      }
-
-      mHandler.obtainMessage(MESSAGE_END_OPERATION).sendToTarget();
-    }
-  }
-
-  private class IdentifyThread extends OperationThread {
-
-    private AnsiSDKLib ansi_lib = null;
-    private boolean mUseUsbHost = true;
-    private int mFinger = 0;
-    private float mMatchScore = 0;
-    private String mTemplateStore = "";
-
-
-    public IdentifyThread(boolean useUsbHost, int finger, float matchScore, String templateStore) {
-      ansi_lib = new AnsiSDKLib();
-      mUseUsbHost = useUsbHost;
-
-      mFinger = finger;
-      mMatchScore = matchScore;
-    }
-
-    public void run() {
-      boolean dev_open = false;
-
-      try {
-        if (mUseUsbHost) {
-          if (!ansi_lib.OpenDeviceCtx(usb_host_ctx)) {
-            mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, ansi_lib.GetErrorMessage())
-                .sendToTarget();
-            mHandler.obtainMessage(MESSAGE_END_OPERATION).sendToTarget();
-            return;
-          }
-        } else {
-          if (!ansi_lib.OpenDevice(0)) {
-            mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, ansi_lib.GetErrorMessage())
-                .sendToTarget();
-            mHandler.obtainMessage(MESSAGE_END_OPERATION).sendToTarget();
-            return;
-          }
-        }
-
-        dev_open = true;
-
-        if (!ansi_lib.FillImageSize()) {
-          mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, ansi_lib.GetErrorMessage())
-              .sendToTarget();
-          mHandler.obtainMessage(MESSAGE_END_OPERATION).sendToTarget();
-          return;
-        }
-
-        byte[] img_buffer = new byte[ansi_lib.GetImageSize()];
-
-        for (; ; ) {
-          if (IsCanceled()) {
-            break;
-          }
-
-          int tmplSize = ansi_lib.GetMaxTemplateSize();
-          byte[] templateBase = new byte[tmplSize];
-          int[] realSize = new int[1];
-
-          long lT1 = SystemClock.uptimeMillis();
-          if (ansi_lib.CreateTemplate(mFinger, img_buffer, templateBase, realSize)) {
-            long op_time = SystemClock.uptimeMillis() - lT1;
-
-            String op_info = String.format("Create done. Time is %d(ms)", op_time);
-            mHandler.obtainMessage(MESSAGE_SHOW_MSG, -1, -1, op_info).sendToTarget();
-
-            mBitmapFP = CreateFingerBitmap(
-                ansi_lib.GetImageWidth(),
-                ansi_lib.GetImageHeight(),
-                img_buffer);
-            mHandler.obtainMessage(MESSAGE_SHOW_IMAGE).sendToTarget();
-
-            FindTemplate(templateBase);
-
-            break;
-          } else {
-            int lastError = ansi_lib.GetErrorCode();
-
-            if (lastError == AnsiSDKLib.FTR_ERROR_EMPTY_FRAME ||
-                lastError == AnsiSDKLib.FTR_ERROR_NO_FRAME ||
-                lastError == AnsiSDKLib.FTR_ERROR_MOVABLE_FINGER) {
-              Thread.sleep(100);
-              continue;
-            } else {
-              String error = String.format("Create failed. Error: %s.", ansi_lib.GetErrorMessage());
-              mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, error).sendToTarget();
-              break;
-            }
-          }
-        }
-      } catch (Exception e) {
-        mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, e.getMessage()).sendToTarget();
-      }
-
-      if (dev_open) {
-        ansi_lib.CloseDevice();
-      }
-
-      mHandler.obtainMessage(MESSAGE_END_OPERATION).sendToTarget();
-    }
-
-    private void FindTemplate(byte[] baseTemplate) {
-      long lT1 = SystemClock.uptimeMillis();
-
-      File DbDir;
-      File[] files;
-
-      // Read all records to identify
-      DbDir = new File(mDbDir);
-      files = DbDir.listFiles();
-
-      float[] matchResult = new float[1];
-
-      boolean found = false;
-      for (int iFiles = 0; iFiles < files.length; iFiles++) {
-        File curFile = files[iFiles];
-        if (curFile.isFile()) {
-          byte[] template = ReadTemplate(curFile);
-
-          if (template != null) {
-            if (ansi_lib.MatchTemplates(baseTemplate, template, matchResult) &&
-                matchResult[0] > mMatchScore) {
-              long op_time = SystemClock.uptimeMillis() - lT1;
-              String message = String
-                  .format("Template found.\nName: %s(%d:%d).\nTime: %d(ms)", curFile.getName(),
-                      iFiles + 1, files.length, op_time);
-              mHandler.obtainMessage(MESSAGE_SHOW_MSG, -1, -1, message).sendToTarget();
-
-              found = true;
-
-              break;
-            }
-          }
-        }
-      }
-
-      if (!found) {
-        mHandler.obtainMessage(MESSAGE_SHOW_ERROR_MSG, -1, -1, "Template not found").sendToTarget();
-      }
-    }
-
-    private byte[] ReadTemplate(File templateFile) {
-      byte[] templateContent = null;
-      FileInputStream fs = null;
-
-      try {
-        long nFileSize = templateFile.length();
-        fs = new FileInputStream(templateFile);
-
-        byte[] fileContent = new byte[(int) nFileSize];
-        fs.read(fileContent);
-        fs.close();
-
-        templateContent = fileContent;
-      } catch (Exception e) {
-
-      }
-
-      return templateContent;
-
-    }
-  }
-
   private void EnableControls(boolean enable) {
     mButtonCapture.setEnabled(enable);
-    mButtonCreate.setEnabled(enable);
-    mButtonVerify.setEnabled(enable);
-    mButtonIdentify.setEnabled(enable);
-
     mUsbHostMode.setEnabled(enable);
-
-    mSaveAnsi.setEnabled(enable);
-    mSaveIso.setEnabled(enable);
-
-    mFinger.setEnabled(enable);
-    mMatchScore.setEnabled(enable);
-
     mButtonStop.setEnabled(!enable);
   }
 
   private void PrepareOperation() {
-    mTxtMessage.setText("Put finger on scanner");
-    mErrMessage.setText("");
+    Toast.makeText(MainActivity.this, "Put finger on scanner", Toast.LENGTH_SHORT).show();
     EnableControls(false);
   }
 
@@ -1010,105 +311,29 @@ public class MainActivity extends Activity {
       usb_host_ctx.Destroy();
       usb_host_ctx = null;
     }
-    //Power Off
     new CloseTask().execute();
-    //HdxUtil.SetFingerPower(0);
   }
 
-  public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    switch (requestCode) {
-      case REQUEST_INPUT_TMPL_NAME:
-        if (resultCode == Activity.RESULT_OK) {
-          String szTmplName = data.getExtras().getString(AskTemplateName.RET_TMPL_NAME);
-          if (szTmplName == null) {
-            mTxtMessage.setText("You must enter the template name.");
-            return;
-          }
-
-          CheckNewTmplName(mDbDir + "/" + szTmplName);
-        } else {
-          mTxtMessage.setText("Canceled.");
-        }
-        break;
-      case REQUEST_SELECT_TMPL_NAME:
-        if (resultCode == Activity.RESULT_OK) {
-          String szTmplName = data.getExtras().getString(SelectTemplateName.RET_SELECTED_TMPL_NAME);
-          if (szTmplName == null) {
-            mTxtMessage.setText("Template not selected.");
-            return;
-          }
-          StartVerifyTemplate(mDbDir + "/" + szTmplName);
-        }
-
-        break;
-    }
-  }
-
-  private void CheckNewTmplName(String tmplName) {
-    File ansiFile = new File(tmplName + kAnsiTemplatePostfix);
-    File isoFile = new File(tmplName + kIsoTemplatePostfix);
-    if ((ansiFile.exists() && mSaveAnsi.isChecked()) ||
-        (isoFile.exists() && mSaveIso.isChecked())) {
-      mNewTmplName = tmplName;
-
-      DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-          switch (which) {
-            case DialogInterface.BUTTON_POSITIVE:
-              StartCreateTmplate(mNewTmplName);
-              break;
-
-            case DialogInterface.BUTTON_NEGATIVE:
-              //No button clicked
-              break;
-          }
-        }
-      };
-
-      AlertDialog.Builder builder = new AlertDialog.Builder(this);
-      builder.setTitle("New template name")
-          .setMessage("Template already exists. Do you want replace it?")
-          .setPositiveButton("Yes", dialogClickListener)
-          .setNegativeButton("No", dialogClickListener).show();
-    } else {
-      StartCreateTmplate(tmplName);
-    }
-
-  }
-
+  @SuppressLint("StaticFieldLeak")
   private class OpenTask extends AsyncTask<Void, Void, Void> {
-
     @Override
     protected Void doInBackground(Void... params) {
-      // TODO 自动生成的方法存根
       try {
-        //PosUtil.setFingerPrintPower(PosUtil.FINGERPRINT_POWER_ON);
         FingerPrint.fingerPrintPower(1);
       } catch (Exception e) {
-        // TODO 自动生成的 catch 块
-        //Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_LONG).show();
         e.printStackTrace();
       }
       return null;
     }
-
-
   }
 
+  @SuppressLint("StaticFieldLeak")
   private class CloseTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-      // TODO 自动生成的方法存根
-                /*PosUtil.setFingerPrintPower(PosUtil.FINGERPRINT_POWER_OFF);
-                FrigerprintControl.frigerprint_power_off();*/
-      // PosUtil.setFingerPrintPower(PosUtil.FINGERPRINT_POWER_OFF);
       FingerPrint.fingerPrintPower(0);
       return null;
     }
-
-
   }
-
 }

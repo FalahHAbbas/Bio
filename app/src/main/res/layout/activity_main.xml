@@ -19,12 +19,6 @@
         android:layout_weight="1"
         android:text="Capture"/>
       <Button
-        android:id="@+id/buttonCreate"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Create"/>
-      <Button
         android:id="@+id/buttonStop"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -35,99 +29,7 @@
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="horizontal">
-      <Button
-        android:id="@+id/buttonVerify"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Verify"/>
-      <Button
-        android:id="@+id/buttonIdentify"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Identify"/>
-      <Button
-        android:id="@+id/Create2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Create2"/>
-    </LinearLayout>
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal">
-      <TextView
-        android:id="@+id/textViewSaveOptions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Template save options:"/>
-
-      <CheckBox
-        android:id="@+id/checkBoxSaveTmplAnsi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ANSI"/>
-
-      <CheckBox
-        android:id="@+id/checkBoxSaveTmplISO"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ISO"/>
-    </LinearLayout>
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal">
-      <TextView
-        android:id="@+id/textViewFinger"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Finger:"/>
-
-      <Spinner
-        android:id="@+id/spinnerFinger"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal">
-      <TextView
-        android:id="@+id/textViewMatchScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MatchScore:"/>
-
-      <Spinner
-        android:id="@+id/spinnerMatchScore"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal">
-      <TextView
-        android:id="@+id/txtMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:freezesText="false"
-        android:visibility="visible"/>
-
-      <TextView
-        android:id="@+id/textError"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#ff0000"/>
-    </LinearLayout>
+      android:orientation="horizontal"/>
 
     <ImageView
       android:id="@+id/imageViewFinger"

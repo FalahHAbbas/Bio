@@ -28,10 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.example.ftransisdkdemo_android.AskTemplateName"
-            android:theme="@android:style/Theme.Dialog" />
-        <activity android:name="com.example.ftransisdkdemo_android.SelectTemplateName" />
     </application>
 
 </manifest>
