@@ -1,0 +1,4 @@
+#Tue Oct 09 16:26:11 CST 2018
+base.0=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\60
+renamed.0=classes.dex
+file.0=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\60\\classes.dex

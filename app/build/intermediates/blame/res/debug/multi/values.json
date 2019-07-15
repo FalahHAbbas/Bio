@@ -1,0 +1,148 @@
+[
+    {
+        "outputFile": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endLine": 14,
+                    "endColumn": 19,
+                    "endOffset": 501
+                },
+                "from": {
+                    "file": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\src\\main\\res\\values\\strings.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 107,
+                        "endLine": 16,
+                        "endColumn": 19,
+                        "endOffset": 553
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 15,
+                    "startColumn": 4,
+                    "startOffset": 506,
+                    "endLine": 22,
+                    "endColumn": 19,
+                    "endOffset": 720
+                },
+                "from": {
+                    "file": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\src\\main\\res\\values\\strings.xml",
+                    "position": {
+                        "startLine": 17,
+                        "startColumn": 4,
+                        "startOffset": 558,
+                        "endLine": 24,
+                        "endColumn": 19,
+                        "endOffset": 772
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 23,
+                    "startColumn": 4,
+                    "startOffset": 725,
+                    "endColumn": 57,
+                    "endOffset": 778
+                },
+                "from": {
+                    "file": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\src\\main\\res\\values\\dimens.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 92,
+                        "endColumn": 57,
+                        "endOffset": 145
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 24,
+                    "startColumn": 4,
+                    "startOffset": 783,
+                    "endColumn": 55,
+                    "endOffset": 834
+                },
+                "from": {
+                    "file": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\src\\main\\res\\values\\dimens.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 151,
+                        "endColumn": 55,
+                        "endOffset": 202
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 25,
+                    "startColumn": 4,
+                    "startOffset": 839,
+                    "endColumn": 48,
+                    "endOffset": 883
+                },
+                "from": {
+                    "file": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\src\\main\\res\\values\\strings.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 58,
+                        "endColumn": 48,
+                        "endOffset": 102
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 26,
+                    "startColumn": 4,
+                    "startOffset": 888,
+                    "endLine": 32,
+                    "endColumn": 12,
+                    "endOffset": 1174
+                },
+                "from": {
+                    "file": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\src\\main\\res\\values\\styles.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 191,
+                        "endLine": 12,
+                        "endColumn": 12,
+                        "endOffset": 481
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 33,
+                    "startColumn": 4,
+                    "startOffset": 1179,
+                    "endLine": 35,
+                    "endColumn": 12,
+                    "endOffset": 1334
+                },
+                "from": {
+                    "file": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\src\\main\\res\\values\\styles.xml",
+                    "position": {
+                        "startLine": 15,
+                        "startColumn": 4,
+                        "startOffset": 522,
+                        "endLine": 17,
+                        "endColumn": 12,
+                        "endOffset": 679
+                    }
+                }
+            }
+        ]
+    }
+]

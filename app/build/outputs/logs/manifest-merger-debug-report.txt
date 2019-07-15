@@ -1,0 +1,81 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:2:1-28:12
+INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:2:1-28:12
+INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:2:1-28:12
+INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:2:1-28:12
+INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:2:1-28:12
+INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:2:1-28:12
+INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:2:1-28:12
+	package
+		ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:3:5-49
+		INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml
+		INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml
+	android:versionName
+		ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:5:5-30
+		INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml
+		INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:2:11-69
+	android:versionCode
+		ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:4:5-28
+		INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml
+		INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml
+uses-feature#android.hardware.usb.host
+ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:7:5-62
+	android:name
+		ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:7:19-59
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:8:5-80
+	android:name
+		ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:8:22-78
+application
+ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:10:5-26:19
+	android:label
+		ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:13:9-41
+	android:icon
+		ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:12:9-45
+	android:allowBackup
+		ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:11:9-35
+	android:theme
+		ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:14:9-40
+activity#com.example.ftransisdkdemo_android.MainActivity
+ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:15:9-23:20
+	android:label
+		ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:17:13-45
+	android:name
+		ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:16:13-75
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:18:13-22:29
+action#android.intent.action.MAIN
+ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:19:17-69
+	android:name
+		ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:19:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:21:17-77
+	android:name
+		ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:21:27-74
+activity#com.example.ftransisdkdemo_android.AskTemplateName
+ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:24:9-105
+	android:theme
+		ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:24:50-93
+	android:name
+		ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:24:19-49
+activity#com.example.ftransisdkdemo_android.SelectTemplateName
+ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:25:9-64
+	android:name
+		ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml:25:19-52
+uses-sdk
+INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml
+INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml
+INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml
+INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml
+		ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml
+		INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml
+		ADDED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml
+		INJECTED from D:\Android\AndroidProjects\Bio\app\src\main\AndroidManifest.xml

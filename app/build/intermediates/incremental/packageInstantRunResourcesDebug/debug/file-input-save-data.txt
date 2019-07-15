@@ -1,0 +1,33 @@
+#Internal package file, do not edit.
+#Tue Oct 09 16:26:05 CST 2018
+2.base=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\debug\\resources-debug.ap_
+5.file=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\debug\\resources-debug.ap_\\res\\drawable-hdpi-v4\\ic_launcher.png
+5.set=ANDROID_RESOURCE
+3.base=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\debug\\resources-debug.ap_
+6.file=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\debug\\resources-debug.ap_\\res\\drawable\\yw.bmp
+2.set=ANDROID_RESOURCE
+4.base=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\assets\\debug
+7.file=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\debug\\resources-debug.ap_\\res\\layout\\activity_main.xml
+7.set=ANDROID_RESOURCE
+count=10
+0.file=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\debug\\resources-debug.ap_\\resources.arsc
+5.base=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\debug\\resources-debug.ap_
+8.file=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\debug\\resources-debug.ap_\\res\\layout\\selecttmpl.xml
+4.set=ASSET
+6.base=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\debug\\resources-debug.ap_
+1.file=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\assets\\debug\\yw.bmp
+9.set=ANDROID_RESOURCE
+9.file=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\debug\\resources-debug.ap_\\AndroidManifest.xml
+1.set=ASSET
+7.base=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\debug\\resources-debug.ap_
+2.file=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\debug\\resources-debug.ap_\\res\\drawable\\logo.png
+6.set=ANDROID_RESOURCE
+0.base=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\debug\\resources-debug.ap_
+8.base=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\debug\\resources-debug.ap_
+3.file=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\debug\\resources-debug.ap_\\res\\layout\\asktmplname.xml
+3.set=ANDROID_RESOURCE
+1.base=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\assets\\debug
+9.base=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\debug\\resources-debug.ap_
+4.file=D\:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\assets\\debug\\1.jpg
+8.set=ANDROID_RESOURCE
+0.set=ANDROID_RESOURCE

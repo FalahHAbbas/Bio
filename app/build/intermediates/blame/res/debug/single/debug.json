@@ -1,0 +1,50 @@
+[
+    {
+        "merged": "D:\\Android\\AndroidProjects\\Bio\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_main.xml.flat",
+        "source": "D:\\Android\\AndroidProjects\\Bio\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "D:\\Android\\AndroidProjects\\Bio\\app\\build\\intermediates\\res\\merged\\debug\\drawable_logo.png.flat",
+        "source": "D:\\Android\\AndroidProjects\\Bio\\app\\src\\main\\res\\drawable\\logo.png"
+    },
+    {
+        "merged": "D:\\Android\\AndroidProjects\\Bio\\app\\build\\intermediates\\res\\merged\\debug\\layout_asktmplname.xml.flat",
+        "source": "D:\\Android\\AndroidProjects\\Bio\\app\\src\\main\\res\\layout\\asktmplname.xml"
+    },
+    {
+        "merged": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\merged\\debug\\drawable_logo.png.flat",
+        "source": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\src\\main\\res\\drawable\\logo.png"
+    },
+    {
+        "merged": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_main.xml.flat",
+        "source": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "D:\\Android\\AndroidProjects\\Bio\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_launcher.png.flat",
+        "source": "D:\\Android\\AndroidProjects\\Bio\\app\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\merged\\debug\\drawable_yw.bmp.flat",
+        "source": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\src\\main\\res\\drawable\\yw.bmp"
+    },
+    {
+        "merged": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\merged\\debug\\layout_selecttmpl.xml.flat",
+        "source": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\src\\main\\res\\layout\\selecttmpl.xml"
+    },
+    {
+        "merged": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\merged\\debug\\layout_asktmplname.xml.flat",
+        "source": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\src\\main\\res\\layout\\asktmplname.xml"
+    },
+    {
+        "merged": "D:\\Android\\AndroidProjects\\Bio\\app\\build\\intermediates\\res\\merged\\debug\\drawable_yw.bmp.flat",
+        "source": "D:\\Android\\AndroidProjects\\Bio\\app\\src\\main\\res\\drawable\\yw.bmp"
+    },
+    {
+        "merged": "D:\\Android\\AndroidProjects\\Bio\\app\\build\\intermediates\\res\\merged\\debug\\layout_selecttmpl.xml.flat",
+        "source": "D:\\Android\\AndroidProjects\\Bio\\app\\src\\main\\res\\layout\\selecttmpl.xml"
+    },
+    {
+        "merged": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_launcher.png.flat",
+        "source": "D:\\app\\ftrAnsiSDKDemo_Android2\\app\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+    }
+]

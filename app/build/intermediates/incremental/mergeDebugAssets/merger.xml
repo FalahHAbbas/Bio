@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="D:\Android\AndroidProjects\Bio\app\src\main\assets"><file name="1.jpg" path="D:\Android\AndroidProjects\Bio\app\src\main\assets\1.jpg"/><file name="yw.bmp" path="D:\Android\AndroidProjects\Bio\app\src\main\assets\yw.bmp"/></source><source path="D:\Android\AndroidProjects\Bio\app\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="D:\Android\AndroidProjects\Bio\app\src\debug\assets"/></dataSet></merger>

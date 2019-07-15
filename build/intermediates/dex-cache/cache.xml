@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="D:\app\ftrAnsiSDKDemo_Android2\app\libs\HdxUtil.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="3667af7a7a0d0f098319e7e4b72ee5aba9f537ec">
+        <dex dex="D:\app\ftrAnsiSDKDemo_Android2\app\build\intermediates\pre-dexed\debug\HdxUtil_caa0d71802cc59ff1e6e0819ca9dd6d12b523706.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\app\ftrAnsiSDKDemo_Android2\app\libs\PosUtil.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="5df9d350d8422afaf572bf29517debcce6b2b518">
+        <dex dex="D:\app\ftrAnsiSDKDemo_Android2\app\build\intermediates\pre-dexed\debug\PosUtil_1abb0af5bab52d5d44c83d0fedee591700f757fc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\app\ftrAnsiSDKDemo_Android2\app\libs\PosUtil.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="5df9d350d8422afaf572bf29517debcce6b2b518">
+        <dex dex="D:\app\ftrAnsiSDKDemo_Android2\app\build\intermediates\pre-dexed\debug\PosUtil_1abb0af5bab52d5d44c83d0fedee591700f757fc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\app\ftrAnsiSDKDemo_Android2\app\libs\HdxUtil.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="3667af7a7a0d0f098319e7e4b72ee5aba9f537ec">
+        <dex dex="D:\app\ftrAnsiSDKDemo_Android2\app\build\intermediates\pre-dexed\debug\HdxUtil_caa0d71802cc59ff1e6e0819ca9dd6d12b523706.jar" />
+    </item>
+
+</items>
