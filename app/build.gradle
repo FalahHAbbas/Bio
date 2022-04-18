@@ -1,13 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdk 32
     defaultConfig {
         applicationId "com.example.ftransisdkdemo_android"
         minSdkVersion 23
-        targetSdkVersion 28
-    }
+        targetSdkVersion 32
 
+        ndk {
+            abiFilters "armeabi-v7a", "x86", "armeabi", "mips"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -21,7 +24,7 @@ android {
 }
 
 dependencies {
-    compile files('libs/HdxUtil.jar')
-    compile files('libs/PosUtil.jar')
+    implementation files('libs/HdxUtil.jar')
+    implementation files('libs/PosUtil.jar')
     implementation files('libs/telpo_api.jar')
 }
